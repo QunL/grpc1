@@ -1,0 +1,33 @@
+syntax = "proto3";
+package protolq;
+
+option go_package = "github.com/qunl/grpc1/protolq";
+
+message Req1{
+  string data1 = 1;
+}
+message Resp1{
+  string data1 = 1;
+}
+
+message Req2 {
+  uint32 data2 = 1;
+  double data3 = 2;
+}
+message Resp2{
+  double data1 = 1;
+}
+
+message CommonMsg {
+  oneof payload {
+    Req1 req1 = 1;
+    Req2 req2 = 2;
+
+    Resp1 resp1 = 11;
+    Resp2 resp2 = 12;
+  }
+}
+
+service RPC {
+  rpc MsgStream (stream CommonMsg) returns (stream CommonMsg) {}
+}
